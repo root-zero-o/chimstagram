@@ -5,6 +5,8 @@ import '../App.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
+// Router
+import { Link } from 'react-router-dom';
 
 
  function Header() {
@@ -12,7 +14,7 @@ import { faBell } from "@fortawesome/free-regular-svg-icons";
     <HeaderWrapper>
         <H1>Chimstagram</H1>
         <IconContainer>
-            <FontAwesomeIcon icon={faSquarePlus} size="2x"/>
+            <StyledLink to={`/Input`}><FontAwesomeIcon icon={faSquarePlus} size="2x"/></StyledLink>
             <FontAwesomeIcon icon={faBell} size="2x"/>
             <Dot>3</Dot>
         </IconContainer>
@@ -54,6 +56,14 @@ const IconContainer = styled.div`
     padding: 5px;
 
     position: relative;
+`;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+    color: black;
 `;
 
 const Dot = styled.div`

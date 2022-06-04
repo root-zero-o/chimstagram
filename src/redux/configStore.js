@@ -1,7 +1,11 @@
 import { createStore } from "redux";
-// 모듈 안에서 rootReducer 가져와서 Store 생성 예정
+import { applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+
 import rootReducer from './modules';
 
 // 생성
-const store = createStore(rootReducer);
+const middlewares = [thunk];
+const enhancer = applyMiddleware(...middlewares);
+const store = createStore(rootReducer, enhancer);
 export default store;

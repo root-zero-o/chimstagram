@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faTwitch } from "@fortawesome/free-brands-svg-icons";
+// Router
+import { Link } from 'react-router-dom';
 
 function NavBar() {
 
@@ -14,7 +16,9 @@ function NavBar() {
             <FontAwesomeIcon icon={ faHouse } size="3x"/>
             <FontAwesomeIcon icon= { faYoutube } size="4x"/>
             <FontAwesomeIcon icon= { faTwitch } size="4x"/>
-            <ProfilePic></ProfilePic>
+            <Link to={'/login'}>
+                <ProfilePic></ProfilePic>
+            </Link>
         </NavBarWrapper>
     )
 }
