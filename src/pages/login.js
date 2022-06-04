@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "../App.css";
+// import Firebase
+import { signInWithEmailAndPassword} from "firebase/auth";
+import { auth } from '../shared/firebase';
+// import middleware
+import { loadNicknameFB } from '../redux/modules/post';
 
- function login() {
+ function Login() {
 
+  let localStorage = window.localStorage;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
+
+  const onClickLogIn = async () => {
+    const user = await signInWithEmailAndPassword(auth, emailInput.current.value, passwordInput.current.value)
+    dispatch(loadNicknameFB(user))
+    localStorage.setItem('email', emailInput.current.value);
+    navigate("/")
+  }
 
   return (
     <LoginWrapper>
@@ -12,15 +32,15 @@ import "../App.css";
       <LoginBox>
         <H2>Log In</H2>
         <InputDiv>
-          <h3>아이디</h3>
-          <Input type="text"/>
+          <h3>이메일</h3>
+          <Input type="text" ref={emailInput}/>
         </InputDiv>
         <InputDiv>
           <h3>패스워드</h3>
-          <Input type="password"/>
+          <Input type="password" ref={passwordInput}/>
         </InputDiv>
         <BtnDiv>
-          <Button>Log In</Button>
+          <Button onClick={onClickLogIn}>Log In</Button>
           <Link to={'/'}><Button>뒤로 가기</Button></Link>
         </BtnDiv>
         <Link to={'/signUp'}><span>회원가입하기</span></Link>
@@ -117,4 +137,4 @@ export const Button = styled.button`
     color: black;
   }
 `;
-export default login;
+export default Login;

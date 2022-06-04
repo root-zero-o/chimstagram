@@ -1,9 +1,10 @@
-import Header from "../containers/Header";
-import NavBar from "../containers/NavBar";
-import Card from "../containers/Card";
+import Header from "../components/Header";
+import NavBar from "../components/NavBar";
+import Card from "../components/Card";
 import styled from 'styled-components';
 
 function Home() {
+
     
     return (
         <>
@@ -19,7 +20,8 @@ function Home() {
 
 
 const CardWrapper = styled.div`
-    margin-top: 17vh;
+    margin-top: 150px;
+    margin-bottom: 120px;
 `;
 
 const Blank = styled.div`

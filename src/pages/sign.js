@@ -19,9 +19,11 @@ function SignUp() {
   const nicknameInput = useRef(null);
 
   const onClick = async ()  => {
+    
     const user = await createUserWithEmailAndPassword(auth, emailInput.current.value, pwInput.current.value);
-    console.log(user)
     dispatch(addFB({email : user.user.email, nickname: nicknameInput.current.value}))
+    let localStorage = window.localStorage;
+    localStorage.setItem('email', emailInput.current.value);
     navigate("/")
   }
 
