@@ -11,7 +11,6 @@ import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
   return (
     <Cardbox>
         <ProfileContainer>
-            <ProfilePic></ProfilePic>
             <ProfileName>rootzero3o</ProfileName>
         </ProfileContainer>
         <ImgBox></ImgBox>

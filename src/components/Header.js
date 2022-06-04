@@ -9,7 +9,7 @@ import { faBell } from "@fortawesome/free-regular-svg-icons";
 // Router
 import { Link } from 'react-router-dom';
 // middleware
-import { loadUserFB } from '../redux/modules/post';
+import { loadUserFB } from '../redux/modules/user';
 
 
 
@@ -31,7 +31,9 @@ import { loadUserFB } from '../redux/modules/post';
     <HeaderWrapper>
         <H1>Chimstagram</H1>
         <IconContainer>
-            <StyledLink to={`/Input`}><FontAwesomeIcon icon={faSquarePlus} size="2x"/></StyledLink>
+            {IsLogin ? (
+                <StyledLink to={`/Input`}><FontAwesomeIcon icon={faSquarePlus} size="2x"/></StyledLink>
+            ) : (<FontAwesomeIcon icon={faSquarePlus} size="2x" onClick={()=>(alert("로그인이 필요합니다!"))}/>)}
             <FontAwesomeIcon icon={faBell} size="2x"/>
             <Dot>3</Dot>
             {IsLogin ? (

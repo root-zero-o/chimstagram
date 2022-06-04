@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
+import { useDispatch } from 'react-redux';
 //import CSS
 import '../App.css';
 // import Styled-Components
@@ -7,16 +8,34 @@ import styled from 'styled-components';
 import NavBar from '../components/NavBar';
 import Header from '../components/Header';
 // import Router
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+//import middleware
+import { uploadFB, addTextFB } from '../redux/modules/post';
 
 function Input() {
 
+    // 이미지 미리보기 URL
     const [fileImage, setFileImage] = useState("");
 
+    const dispatch = useDispatch();
     const saveFileImage = (event) => {
+      // 이미지 미리보기 함수
       setFileImage(URL.createObjectURL(event.target.files[0]));
+      // 이미지 storage에 업로드
+      dispatch(uploadFB(event))
     };
+    // FB에 text 저장  
+    const textInput = useRef(null);
+    const navigate = useNavigate();
+
+    const onClickBtn = () => {
+      const localStorage = window.localStorage;
+      const now_user = localStorage.getItem('email');
+      dispatch(addTextFB({text: textInput.current.value, email: now_user}));
+      navigate('/');
+      alert("저장 완료!");
+    }
+
 
   return (
     <>
@@ -28,11 +47,15 @@ function Input() {
           <InputDiv>
             <h3>이미지 업로드</h3>
             <StyledLabel htmlFor="file">파일 선택</StyledLabel>
-            <ImgInput type="file" id="file" accept="image/*" onChange={saveFileImage}/>
+            <ImgInput 
+              type="file" 
+              id="file" 
+              accept="image/*" 
+              onChange={saveFileImage}/>
             <h3>글쓰기</h3>
-            <TextArea placeholder='여기에 글을 입력하세요!'/>
+            <TextArea placeholder='여기에 글을 입력하세요!' ref={textInput}/>
             <div>
-              <Button>완료!</Button>
+              <Button onClick={onClickBtn}>완료!</Button>
               <Link to={'/'}><Button>취소</Button></Link>
             </div>
           </InputDiv>

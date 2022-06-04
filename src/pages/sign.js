@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../shared/firebase';
 // 
-import { addFB } from '../redux/modules/post';
+import { addFB } from '../redux/modules/user';
 
 function SignUp() {
 

@@ -7,7 +7,7 @@ import "../App.css";
 import { signInWithEmailAndPassword} from "firebase/auth";
 import { auth } from '../shared/firebase';
 // import middleware
-import { loadNicknameFB } from '../redux/modules/post';
+import { loadNicknameFB } from '../redux/modules/user';
 
  function Login() {
 
