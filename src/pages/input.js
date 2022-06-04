@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 //import CSS
 import '../App.css';
 // import Styled-Components
@@ -6,25 +6,34 @@ import styled from 'styled-components';
 // import Components
 import NavBar from '../components/NavBar';
 import Header from '../components/Header';
+// import Router
+import { Link } from 'react-router-dom';
 
 
 function Input() {
+
+    const [fileImage, setFileImage] = useState("");
+
+    const saveFileImage = (event) => {
+      setFileImage(URL.createObjectURL(event.target.files[0]));
+    };
+
   return (
     <>
       <Header/>
         <InputWrapper>
           <div>
-            <ImgBox></ImgBox>
+            <ImgBox src={fileImage}></ImgBox>
           </div>
           <InputDiv>
             <h3>이미지 업로드</h3>
-            <StyledLabel for="file">파일 선택</StyledLabel>
-            <ImgInput type="file" id="file"/>
+            <StyledLabel htmlFor="file">파일 선택</StyledLabel>
+            <ImgInput type="file" id="file" accept="image/*" onChange={saveFileImage}/>
             <h3>글쓰기</h3>
             <TextArea placeholder='여기에 글을 입력하세요!'/>
             <div>
-              <button>완료!</button>
-              <button>취소</button>
+              <Button>완료!</Button>
+              <Link to={'/'}><Button>취소</Button></Link>
             </div>
           </InputDiv>
         </InputWrapper>
@@ -44,8 +53,7 @@ const InputWrapper = styled.div`
   align-items: center;
 `;
 
-const ImgBox = styled.div`
-  background-color: #ddd;
+const ImgBox = styled.img`
   width: 65vw;
   max-width: 650px;
   height: 65vw;
@@ -109,6 +117,8 @@ const TextArea = styled.textarea`
   margin: 10px 0px;
   padding: 5px;
 
+  font-family: text;
+
   &:placeholder-shown{
     font-family: text;
     font-size: 15px;
@@ -116,5 +126,26 @@ const TextArea = styled.textarea`
   }
 `;
 
+const Button = styled.button`
+  width: 80px;
+  height: 40px;
+
+  background-color: black;
+  color: white;
+
+  font-family: text;
+  font-size: 15px;
+
+  border-radius: 15px;
+
+  margin: 0px 5px;
+
+  &:hover{
+    background-color: rgba(0,0,0,0.3);
+    border: none;
+    color: black;
+    cursor: pointer;
+  }
+`;
 
 export default Input;
