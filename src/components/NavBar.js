@@ -16,6 +16,7 @@ function NavBar() {
     const LocalEmail = localStorage.getItem('email')
     const onLogout = () => {
         localStorage.removeItem('email');
+        localStorage.removeItem('nickname');
     }
     return (
         <NavBarWrapper>

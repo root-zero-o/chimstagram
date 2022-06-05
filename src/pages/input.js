@@ -18,7 +18,7 @@ function Input() {
     const [fileImage, setFileImage] = useState("");
 
     const dispatch = useDispatch();
-    const saveFileImage = (event) => {
+    const saveFileImage = async (event) => {
       // 이미지 미리보기 함수
       setFileImage(URL.createObjectURL(event.target.files[0]));
       // 이미지 storage에 업로드
@@ -31,7 +31,8 @@ function Input() {
     const onClickBtn = () => {
       const localStorage = window.localStorage;
       const now_user = localStorage.getItem('email');
-      dispatch(addTextFB({text: textInput.current.value, email: now_user}));
+      const now_nickname = localStorage.getItem('nickname')
+      dispatch(addTextFB({text: textInput.current.value, email: now_user, nickname: now_nickname, img_url: fileImage}));
       navigate('/');
       alert("저장 완료!");
     }
@@ -41,9 +42,7 @@ function Input() {
     <>
       <Header/>
         <InputWrapper>
-          <div>
-            <ImgBox src={fileImage}></ImgBox>
-          </div>
+          <ImgBox src={fileImage}></ImgBox>
           <InputDiv>
             <h3>이미지 업로드</h3>
             <StyledLabel htmlFor="file">파일 선택</StyledLabel>
@@ -51,11 +50,12 @@ function Input() {
               type="file" 
               id="file" 
               accept="image/*" 
-              onChange={saveFileImage}/>
+              onChange={saveFileImage}
+              required/>
             <h3>글쓰기</h3>
-            <TextArea placeholder='여기에 글을 입력하세요!' ref={textInput}/>
+            <TextArea placeholder='여기에 글을 입력하세요!' ref={textInput} required/>
             <div>
-              <Button onClick={onClickBtn}>완료!</Button>
+              <Button type="submit" onClick={onClickBtn}>완료!</Button>
               <Link to={'/'}><Button>취소</Button></Link>
             </div>
           </InputDiv>
@@ -66,10 +66,11 @@ function Input() {
 }
 
 const InputWrapper = styled.div`
-  margin: 180px 0px 100px 0px;
+  margin: 30vh 0px 100px 0px;
 
   width: 100vw;
-  height: 70vh;
+  height: 45vh;
+  max-height: 450px;
 
   display: flex;
   justify-content: space-evenly;
@@ -88,7 +89,7 @@ const ImgBox = styled.img`
   border-radius: 10px;
 `;
 
-const InputDiv = styled.div`
+const InputDiv = styled.form`
 
   width: 30vw;
   min-width: 200px;

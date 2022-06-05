@@ -16,8 +16,8 @@ import { loadUserFB } from '../redux/modules/user';
  function Header() {
 
     const dispatch = useDispatch();
-    let IsLogin = useSelector(state => state.post.is_login)
-    const Nickname = useSelector(state => state.post.nickname)
+    let IsLogin = useSelector(state => state.user.is_login)
+    const Nickname = useSelector(state => state.user.nickname)
     let localStorage = window.localStorage;
     const LocalEmail = localStorage.getItem('email')
     dispatch(loadUserFB(LocalEmail))

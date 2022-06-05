@@ -24,6 +24,7 @@ function SignUp() {
     dispatch(addFB({email : user.user.email, nickname: nicknameInput.current.value}))
     let localStorage = window.localStorage;
     localStorage.setItem('email', emailInput.current.value);
+    localStorage.setItem('nickname', nicknameInput.current.value)
     navigate("/")
   }
 

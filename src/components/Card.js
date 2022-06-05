@@ -1,28 +1,48 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+// import Style
 import styled from 'styled-components';
-import { ProfilePic } from './NavBar';
 import '../App.css';
 // import FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
+// import Router
+import { Link } from 'react-router-dom';
 
+// FB에 저장된 게시글 Home에 카드로 표시
  function Card() {
+
+    const textList = useSelector(state => state.post.list);
+    console.log(textList)
+    const textMap = textList.map((value, index) => (
+        <StyledLink to={`/detail/${value.id}`}>
+            <Cardbox key={index}>
+                <ProfileContainer>
+                    <ProfileName>{value.nickname}</ProfileName>
+                </ProfileContainer>
+                <ImgBox src={value.img_url}></ImgBox>
+                <TextBox>{value.text}</TextBox>
+                <IconBox>
+                    <FontAwesomeIcon icon={ faHeart } size="2x"/>
+                    <FontAwesomeIcon icon={ faCommentDots } size="2x"/>
+                    <span>좋아요 0개</span>
+                </IconBox>
+            </Cardbox>
+        </StyledLink>
+    ))
+
   return (
-    <Cardbox>
-        <ProfileContainer>
-            <ProfileName>rootzero3o</ProfileName>
-        </ProfileContainer>
-        <ImgBox></ImgBox>
-        <TextBox>침착맨 너무 웃기다</TextBox>
-        <IconBox>
-            <FontAwesomeIcon icon={ faHeart } size="2x"/>
-            <FontAwesomeIcon icon={ faCommentDots } size="2x"/>
-            <span>좋아요 0개</span>
-        </IconBox>
-    </Cardbox>
+    <>
+         {textMap}
+    </>
   )
 }
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+`;
 
 const Cardbox = styled.div`
     width: 350px;
@@ -30,12 +50,15 @@ const Cardbox = styled.div`
     box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
     border-radius: 20px;;
 
-    margin: 0px 30px;
+    margin: 10px 30px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
 
+    &:hover{
+        box-shadow: 0px 0px 15px rgba(0,0,0,0.4);
+    }
 `;
 
 const ProfileContainer = styled.div`
@@ -48,10 +71,9 @@ const ProfileContainer = styled.div`
 
 `;
 
-const ImgBox = styled.div`
+const ImgBox = styled.img`
     width: 350px;
     height: 300px;
-    background-color: #ddd;
 
     margin-bottom: 10px;
 `;
