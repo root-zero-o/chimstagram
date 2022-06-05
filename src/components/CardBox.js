@@ -5,7 +5,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import Modal from './Modal';
 
- function CardBox({ id, nickname, text, img_url }) {
+ function CardBox({ id, nickname, text, img_url, index }) {
 
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -18,7 +18,7 @@ import Modal from './Modal';
     
   return (
     <>
-        <Modal open={modalOpen} close={closeModal} id={id} nickname={nickname} text={text} img_url={img_url} />
+        <Modal open={modalOpen} close={closeModal} id={id} nickname={nickname} text={text} img_url={img_url} index={index} />
         <CardDiv onClick={openModal}>
                     <ProfileContainer>
                         <ProfileName>{nickname}</ProfileName>

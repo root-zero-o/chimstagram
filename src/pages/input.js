@@ -12,7 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 //import middleware
 import { addTextFB } from '../redux/modules/post';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "../shared/firebase";
+import { storage } from "../shared/firebase";
 
 function Input() {
 
@@ -21,7 +21,6 @@ function Input() {
     const [fileURL, setFileURL] = useState("");
 
     const dispatch = useDispatch();
-    // const file_link_ref = useRef(null);
 
     const saveFileImage = async (event) => {
       // 이미지 미리보기 함수
@@ -82,7 +81,7 @@ function Input() {
   )
 }
 
-const InputWrapper = styled.div`
+export const InputWrapper = styled.div`
   margin: 30vh 0px 100px 0px;
 
   width: 100vw;
@@ -94,7 +93,7 @@ const InputWrapper = styled.div`
   align-items: center;
 `;
 
-const ImgBox = styled.img`
+export const ImgBox = styled.img`
   width: 65vw;
   max-width: 650px;
   height: 65vw;
@@ -106,7 +105,7 @@ const ImgBox = styled.img`
   border-radius: 10px;
 `;
 
-const InputDiv = styled.form`
+export const InputDiv = styled.form`
 
   width: 30vw;
   min-width: 200px;
@@ -125,7 +124,7 @@ const InputDiv = styled.form`
   font-family: text;
 `;
 
-const StyledLabel = styled.label`
+export const StyledLabel = styled.label`
   background-color: black;
   color: white;
 
@@ -145,13 +144,13 @@ const StyledLabel = styled.label`
   }
 `;
 
-const ImgInput = styled.input`
+export const ImgInput = styled.input`
   width: 80%;
   
   display: none;
 `;
 
-const TextArea = styled.textarea`
+export const TextArea = styled.textarea`
   width: 80%;
   height: 50%;
 
@@ -159,6 +158,7 @@ const TextArea = styled.textarea`
   padding: 5px;
 
   font-family: text;
+  font-size: 20px;
 
   &:placeholder-shown{
     font-family: text;
@@ -167,7 +167,7 @@ const TextArea = styled.textarea`
   }
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   width: 80px;
   height: 40px;
 

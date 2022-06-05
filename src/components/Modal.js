@@ -1,11 +1,35 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 // import Style
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+// import middleware
+import {deleteFB, deleteFileFB} from '../redux/modules/post'
+// import Router
+import { Link } from 'react-router-dom';
 
-function Modal({ open, close, id, nickname, text, img_url }) {
-   
+function Modal({ open, close, id, nickname, text, img_url, index }) {
+    // 로그인 여부 판단
+    const now_email = window.localStorage.getItem('email')
+    const now_nickname = window.localStorage.getItem('nickname')
+
+    let IsLogin = useSelector(state => state.user.is_login);
+    if(now_email){
+        IsLogin = true
+    } else {
+        IsLogin = false
+    }
+
+    // 글 삭제하기
+    const dispatch = useDispatch();
+
+    const onDelete = () => {
+        dispatch(deleteFB(id));
+        dispatch(deleteFileFB(img_url))
+        alert('삭제민수야 고맙다🙏');
+    }
+
   return (
       <>
         {open ? (
@@ -19,14 +43,18 @@ function Modal({ open, close, id, nickname, text, img_url }) {
                     <TextDiv height="10%" fontWeight="bold">작성자 : {nickname}</TextDiv>
                     <TextDiv height="30%">{text}</TextDiv>
                     <TextDiv height="10%">
-                        <FontAwesomeIcon icon={ faHeart } size="x"/>
+                        {IsLogin ? (
+                            <FontAwesomeIcon icon={ faHeart } onClick={() => alert('로그인이 되어있어요!')}/>
+                        ) : (<FontAwesomeIcon icon={ faHeart } onClick={() => alert('로그인이 필요합니다!')}/>)}
                         <Span>좋아요 0개</Span>
                     </TextDiv>
                     <CommentContainer>
-                        <InputForm>
-                            <Input type="text" placeholder='댓글 달기' required/>
-                            <Button>저장</Button>
-                        </InputForm>
+                        {IsLogin ? (
+                            <InputForm>
+                                <Input type="text" placeholder='댓글 달기' required/>
+                                <Button>저장</Button>
+                            </InputForm>
+                        ) : null}
                         <CommentBox>
                             <Comment>
                                 <Span fontWeight="bold">주펄</Span>
@@ -35,7 +63,12 @@ function Modal({ open, close, id, nickname, text, img_url }) {
                         </CommentBox>
                     </CommentContainer>
                 </TextBox>
+                { now_nickname === nickname ? (<BtnDiv>
+                                                    <DeleteBtn onClick={onDelete}>삭제하기</DeleteBtn>
+                                                    <Link to={'/update'}><DeleteBtn>수정하기</DeleteBtn></Link>
+                                                </BtnDiv>) : null}
             </ModalBox>
+            
             </>
         ) : null }
       </>
@@ -43,6 +76,8 @@ function Modal({ open, close, id, nickname, text, img_url }) {
     
   )
 }
+
+//styled-components
 
 const ModalBackground = styled.div`
     position: fixed;
@@ -78,6 +113,7 @@ const ModalBox = styled.div`
     z-index: 20;
 
     position: fixed;
+    top: 20%;
 `;
 
 const TextBox = styled.div`
@@ -183,6 +219,27 @@ const Comment = styled.div`
     padding: 10px;
 `;
 
+const BtnDiv = styled.div`
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+`;
+
+const DeleteBtn = styled.button`
+    width: 70px;
+    height: 25px;
+    background-color: black;
+    color: white;
+    font-family: text;
+    border: none;
+    border-radius: 10px;
+    margin: 0px 5px;
+
+    &:hover{
+        background-color: rgba(0,0,0,0.3);
+        cursor: pointer;
+    }
+`;
 
 
 export default Modal;

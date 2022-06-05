@@ -1,13 +1,13 @@
 // import Firebase
-import { getDoc, collection, addDoc, getDocs } from "firebase/firestore";
+import { getDoc, collection, addDoc, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db, storage } from "../../shared/firebase";
-import user from "./user";
-
+import { ref, deleteObject } from "firebase/storage";
 
 // 액션 타입
 const ADD_IMG = 'post/ADD_IMG';
 const ADD_TEXT = 'post/ADD_TEXT';
 const LOAD_TEXT = 'post/LOAD_TEXT';
+const DELETE_POST = 'post/DELETE_POST'
 
 // 액션 생성함수
 export const addImg = (payload) => {
@@ -20,6 +20,10 @@ export const addText = (payload) => {
 
 export const loadText = (payload) => {
     return ({type: LOAD_TEXT, payload});
+}
+
+export const deletePost = (id) => {
+    return ({type: DELETE_POST, id})
 }
 
 // 미들웨어   
@@ -45,6 +49,22 @@ export const loadTextFB = () => {
         dispatch(loadText(text_list))
     }
 }
+// 작성된 글 삭제하기
+export const deleteFB = (id) => {
+    return async function(dispatch){
+        const docRef = doc(db, "post", id);
+        await deleteDoc(docRef);
+        dispatch(deletePost(id))
+    }
+}
+// 업로드된 파일 삭제하기
+export const deleteFileFB = (url) => {
+    return async function(dispatch){
+        const deleteRef = ref(storage, url)
+        await deleteObject(deleteRef)
+    }
+}
+
 // 초기 state
 const initialState = {
     list: [],
@@ -62,6 +82,9 @@ export default function post (state = initialState, action={}) {
         }
         case LOAD_TEXT : {
             return {list: action.payload}
+        }
+        case DELETE_POST : {
+            return {list: state.list.filter(value => value.id !== action.id)}
         }
         default: {
             return state;
