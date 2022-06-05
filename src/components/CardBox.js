@@ -11,7 +11,6 @@ import Modal from './Modal';
 
     const openModal = () => {
         setModalOpen(true);
-        console.log(id)
     }
     const closeModal = () => {
         setModalOpen(false);
@@ -19,7 +18,7 @@ import Modal from './Modal';
     
   return (
     <>
-        <Modal open={modalOpen} close={closeModal} />
+        <Modal open={modalOpen} close={closeModal} id={id} nickname={nickname} text={text} img_url={img_url} />
         <CardDiv onClick={openModal}>
                     <ProfileContainer>
                         <ProfileName>{nickname}</ProfileName>

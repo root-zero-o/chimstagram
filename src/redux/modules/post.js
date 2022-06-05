@@ -1,7 +1,6 @@
 // import Firebase
 import { getDoc, collection, addDoc, getDocs } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
-import { db, storage} from "../../shared/firebase";
+import { db, storage } from "../../shared/firebase";
 import user from "./user";
 
 
@@ -23,17 +22,7 @@ export const loadText = (payload) => {
     return ({type: LOAD_TEXT, payload});
 }
 
-// 미들웨어
-// 이미지 업로드
-export const uploadFB = (event) => {
-    return async function (dispatch){
-        const uploaded_file = await uploadBytes(
-        ref(storage, `images/${event.target.files[0].name}/`),
-        event.target.files[0]
-        );
-    }
-}
-
+// 미들웨어   
 // 작성한 글 FB에 저장
 export const addTextFB = (text) => {
     return async function(dispatch){

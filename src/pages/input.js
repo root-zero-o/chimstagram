@@ -10,20 +10,37 @@ import Header from '../components/Header';
 // import Router
 import { Link, useNavigate } from 'react-router-dom';
 //import middleware
-import { uploadFB, addTextFB } from '../redux/modules/post';
+import { addTextFB } from '../redux/modules/post';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../shared/firebase";
 
 function Input() {
 
     // 이미지 미리보기 URL
     const [fileImage, setFileImage] = useState("");
+    const [fileURL, setFileURL] = useState("");
 
     const dispatch = useDispatch();
+    // const file_link_ref = useRef(null);
+
     const saveFileImage = async (event) => {
       // 이미지 미리보기 함수
       setFileImage(URL.createObjectURL(event.target.files[0]));
-      // 이미지 storage에 업로드
-      dispatch(uploadFB(event));
+      dispatch(uploadFB(event))
     };
+
+    // 이미지 storage에 업로드
+    const uploadFB = (event) => {
+      return async function (dispatch){
+          const uploaded_file = await uploadBytes(
+          ref(storage, `images/${event.target.files[0].name}/`),
+          event.target.files[0]
+          );
+          const file_url = await getDownloadURL(uploaded_file.ref);
+          setFileURL(file_url);
+      }
+  }
+    
     // FB에 text 저장  
     const textInput = useRef(null);
     const navigate = useNavigate();
@@ -32,7 +49,7 @@ function Input() {
       const localStorage = window.localStorage;
       const now_user = localStorage.getItem('email');
       const now_nickname = localStorage.getItem('nickname')
-      dispatch(addTextFB({text: textInput.current.value, email: now_user, nickname: now_nickname, img_url: fileImage}));
+      dispatch(addTextFB({text: textInput.current.value, email: now_user, nickname: now_nickname, img_url: fileURL}));
       navigate('/');
       alert("저장 완료!");
     }
