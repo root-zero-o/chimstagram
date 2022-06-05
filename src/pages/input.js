@@ -22,7 +22,7 @@ function Input() {
       // 이미지 미리보기 함수
       setFileImage(URL.createObjectURL(event.target.files[0]));
       // 이미지 storage에 업로드
-      dispatch(uploadFB(event))
+      dispatch(uploadFB(event));
     };
     // FB에 text 저장  
     const textInput = useRef(null);

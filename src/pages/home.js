@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+// import components
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import Card from "../components/Card";
@@ -30,7 +31,6 @@ function Home() {
         </>
     )
 }
-
 
 const CardWrapper = styled.div`
     margin-top: 150px;

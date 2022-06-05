@@ -51,6 +51,8 @@ const NavBarWrapper = styled.div`
 
     position: fixed;
     bottom: 0px;
+
+    z-index: 7;
 `;
 
 export const ProfilePic = styled.div`

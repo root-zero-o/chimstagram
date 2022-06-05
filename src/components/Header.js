@@ -60,6 +60,8 @@ const HeaderWrapper = styled.div`
 
     position: fixed;
     top: 0px;
+
+    z-index: 7;
 `;
 
 const H1 = styled.h1`
