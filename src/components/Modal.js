@@ -2,12 +2,13 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 // import Style
 import styled from 'styled-components';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
 // import middleware
 import {deleteFB, deleteFileFB} from '../redux/modules/post'
+import {deleteLikePostFB} from '../redux/modules/likes'
 // import Router
 import { Link } from 'react-router-dom';
+// import component
+import Heart from './Heart';
 
 function Modal({ open, close, id, nickname, text, img_url, index }) {
     // 로그인 여부 판단
@@ -23,10 +24,14 @@ function Modal({ open, close, id, nickname, text, img_url, index }) {
 
     // 글 삭제하기
     const dispatch = useDispatch();
+    const likePost = useSelector(state => state.likes.list)
+    console.log(likePost)
+    const nowLikePost = likePost.filter((value) => value.like_post === id)
 
     const onDelete = () => {
         dispatch(deleteFB(id));
         dispatch(deleteFileFB(img_url))
+        dispatch(deleteLikePostFB(nowLikePost, id))
         alert('삭제민수야 고맙다🙏');
     }
 
@@ -43,16 +48,13 @@ function Modal({ open, close, id, nickname, text, img_url, index }) {
                     <TextDiv height="10%" fontWeight="bold">작성자 : {nickname}</TextDiv>
                     <TextDiv height="30%">{text}</TextDiv>
                     <TextDiv height="10%">
-                        {IsLogin ? (
-                            <FontAwesomeIcon icon={ faHeart } onClick={() => alert('로그인이 되어있어요!')}/>
-                        ) : (<FontAwesomeIcon icon={ faHeart } onClick={() => alert('로그인이 필요합니다!')}/>)}
-                        <Span>좋아요 0개</Span>
+                        <Heart IsLogin={IsLogin} nowLikePost={nowLikePost}/>
                     </TextDiv>
                     <CommentContainer>
                         {IsLogin ? (
                             <InputForm>
                                 <Input type="text" placeholder='댓글 달기' required/>
-                                <Button>저장</Button>
+                                <Button type="button">저장</Button>
                             </InputForm>
                         ) : null}
                         <CommentBox>
@@ -64,8 +66,8 @@ function Modal({ open, close, id, nickname, text, img_url, index }) {
                     </CommentContainer>
                 </TextBox>
                 { now_nickname === nickname ? (<BtnDiv>
-                                                    <DeleteBtn onClick={onDelete}>삭제하기</DeleteBtn>
-                                                    <Link to={'/update'}><DeleteBtn>수정하기</DeleteBtn></Link>
+                                                    <DeleteBtn type="button" onClick={onDelete}>삭제하기</DeleteBtn>
+                                                    <Link to={`/update/${index}`}><DeleteBtn type="button">수정하기</DeleteBtn></Link>
                                                 </BtnDiv>) : null}
             </ModalBox>
             

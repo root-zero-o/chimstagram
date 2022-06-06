@@ -6,7 +6,7 @@ import Home from './pages/home';
 import Input from "./pages/input";
 import Login from './pages/login';
 import SignUp from './pages/sign';
-import Update from './pages/Update';
+import Update from './pages/update';
 
 
 
@@ -18,7 +18,7 @@ function App() {
       <Route path="/input" element={<Input/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/signUp" element={<SignUp/>}/>
-      <Route path="/update" element={<Update/>}/>
+      <Route path="/update/:update" element={<Update/>}/>
     </Routes> 
   );
 }

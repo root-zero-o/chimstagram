@@ -10,12 +10,14 @@ import styled from 'styled-components';
 // import middleware
 import { loadTextFB } from '../redux/modules/post';
 import { loadAllUserFB } from '../redux/modules/user';
+import { loadLikePostFB } from '../redux/modules/likes'
 
 function Home() {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(loadLikePostFB())
         dispatch(loadAllUserFB());
         dispatch(loadTextFB());
     },[dispatch]);

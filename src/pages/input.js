@@ -24,7 +24,7 @@ function Input() {
 
     const saveFileImage = async (event) => {
       // 이미지 미리보기 함수
-      setFileImage(URL.createObjectURL(event.target.files[0]));
+      setFileImage(window.URL.createObjectURL(event.target.files[0]));
       dispatch(uploadFB(event))
     };
 

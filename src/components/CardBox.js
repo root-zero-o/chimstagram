@@ -5,17 +5,18 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import Modal from './Modal';
 
- function CardBox({ id, nickname, text, img_url, index }) {
+ function CardBox({ id, nickname, text, img_url, index}) {
 
+    // 모달창 열고 닫기
     const [modalOpen, setModalOpen] = useState(false);
-
+    
     const openModal = () => {
         setModalOpen(true);
     }
     const closeModal = () => {
         setModalOpen(false);
     }
-    
+  
   return (
     <>
         <Modal open={modalOpen} close={closeModal} id={id} nickname={nickname} text={text} img_url={img_url} index={index} />
@@ -26,9 +27,7 @@ import Modal from './Modal';
                     <ImgBox src={img_url}></ImgBox>
                     <TextBox>{text}</TextBox>
                     <IconBox>
-                        <FontAwesomeIcon icon={ faHeart } size="2x"/>
-                        <FontAwesomeIcon icon={ faCommentDots } size="2x"/>
-                        <span>좋아요 0개</span>
+                        <span>좋아요 0개 / 댓글 0개</span>
                     </IconBox>
         </CardDiv>
     </>
@@ -93,6 +92,9 @@ const IconBox = styled.div`
     width: 190px;
     margin-bottom: 10px;
     z-index: 3;
+
+    font-family: text;
+    font-size: 15px;
 `;
 
 const ProfileName = styled.span`
