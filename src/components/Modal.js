@@ -25,7 +25,6 @@ function Modal({ open, close, id, nickname, text, img_url, index }) {
     // 글 삭제하기
     const dispatch = useDispatch();
     const likePost = useSelector(state => state.likes.list)
-    console.log(likePost)
     const nowLikePost = likePost.filter((value) => value.like_post === id)
 
     const onDelete = () => {

@@ -59,7 +59,6 @@ export const loadTextFB = () => {
 export const deleteFB = (id) => {
     return async function(dispatch){
         const docRef = doc(db, "post", id);
-        console.log(docRef)
         await deleteDoc(docRef);
         dispatch(deletePost(id))
     }

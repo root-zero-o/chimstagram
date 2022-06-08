@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
+import { useSelector } from 'react-redux';
+
 import styled from 'styled-components';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import Modal from './Modal';
 
  function CardBox({ id, nickname, text, img_url, index}) {
@@ -16,6 +15,8 @@ import Modal from './Modal';
     const closeModal = () => {
         setModalOpen(false);
     }
+
+    const likeList = useSelector(state => state.likes.list[index].like_user)
   
   return (
     <>
@@ -27,7 +28,7 @@ import Modal from './Modal';
                     <ImgBox src={img_url}></ImgBox>
                     <TextBox>{text}</TextBox>
                     <IconBox>
-                        <span>좋아요 0개 / 댓글 0개</span>
+                        <span>좋아요 {likeList.length}개 / 댓글 0개</span>
                     </IconBox>
         </CardDiv>
     </>

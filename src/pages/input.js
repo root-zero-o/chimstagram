@@ -22,7 +22,7 @@ function Input() {
 
     const dispatch = useDispatch();
 
-    const saveFileImage = async (event) => {
+    const saveFileImage = (event) => {
       // 이미지 미리보기 함수
       setFileImage(window.URL.createObjectURL(event.target.files[0]));
       dispatch(uploadFB(event))

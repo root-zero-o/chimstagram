@@ -6,6 +6,7 @@ const ADD_POST = 'likes/ADD_POST'
 const LOAD_POST = 'likes/LOAD_POST'
 const DELETE_POST = 'likes/DELETE_POST'
 const UPDATE_LIKE = 'likes/UPDATE_LIKE'
+const DELETE_LIKE = 'likes/DELETE_LIKE'
 
 /* 액션 생성함수*/
 const addPost = (payload) => {
@@ -19,6 +20,9 @@ const loadPost = (payload) => {
 }
 const updateLike = (payload) => {
     return ({ type: UPDATE_LIKE, payload })
+}
+const deleteLike = () => {
+    return ({ type: DELETE_LIKE })
 }
 
 /* 미들웨어 */
@@ -55,7 +59,6 @@ export const loadLikePostFB = () => {
 export const updateLikeFB = ([payload], nickname, index) => {
     return async function(dispatch){
         const nowPostId = payload.id
-        console.log(nowPostId)
         const docRef = doc(db, "likes", nowPostId);
         await updateDoc(docRef, {
             like_post: payload.like_post,
@@ -65,6 +68,17 @@ export const updateLikeFB = ([payload], nickname, index) => {
     }
 }
 
+export const deleteLikeFB = (id, postId, list, nickname) => {
+    return async function(dispatch){
+        const docRef = doc(db, "likes", id);
+        await updateDoc(docRef, {
+            like_post : postId,
+            like_user : list.filter(value => value !== nickname)
+        })
+        dispatch(loadLikePostFB());
+        dispatch(deleteLike());
+    }
+}
 /* 초기 state */
 const initialState = {
     list:[]
@@ -83,6 +97,9 @@ export default function post (state = initialState, action={}) {
             return {list: action.payload}
         }
         case UPDATE_LIKE : {
+            return {list : [...state.list]}
+        }
+        case DELETE_LIKE : {
             return {list : [...state.list]}
         }
         default: {
