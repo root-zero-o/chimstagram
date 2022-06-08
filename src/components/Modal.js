@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 // import Style
 import styled from 'styled-components';
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 // import component
 import Heart from './Heart';
 
-function Modal({ open, close, id, nickname, text, img_url, index }) {
+function Modal({ open, close, id, nickname, text, img_url, index, nowLikeList}) {
     // 로그인 여부 판단
     const now_email = window.localStorage.getItem('email')
     const now_nickname = window.localStorage.getItem('nickname')
@@ -24,13 +24,11 @@ function Modal({ open, close, id, nickname, text, img_url, index }) {
 
     // 글 삭제하기
     const dispatch = useDispatch();
-    const likePost = useSelector(state => state.likes.list)
-    const nowLikePost = likePost.filter((value) => value.like_post === id)
 
     const onDelete = () => {
         dispatch(deleteFB(id));
         dispatch(deleteFileFB(img_url))
-        dispatch(deleteLikePostFB(nowLikePost, id))
+        dispatch(deleteLikePostFB(nowLikeList, id))
         alert('삭제민수야 고맙다🙏');
     }
 
@@ -47,7 +45,7 @@ function Modal({ open, close, id, nickname, text, img_url, index }) {
                     <TextDiv height="10%" fontWeight="bold">작성자 : {nickname}</TextDiv>
                     <TextDiv height="30%">{text}</TextDiv>
                     <TextDiv height="10%">
-                        <Heart IsLogin={IsLogin} nowLikePost={nowLikePost}/>
+                        <Heart IsLogin={IsLogin} nowLikeList={nowLikeList}/>
                     </TextDiv>
                     <CommentContainer>
                         {IsLogin ? (

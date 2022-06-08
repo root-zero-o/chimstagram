@@ -56,7 +56,7 @@ export const loadLikePostFB = () => {
     }
 }
 
-export const updateLikeFB = ([payload], nickname, index) => {
+export const updateLikeFB = (payload, nickname, index) => {
     return async function(dispatch){
         const nowPostId = payload.id
         const docRef = doc(db, "likes", nowPostId);

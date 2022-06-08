@@ -1,34 +1,42 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 // import styled-component
 import styled from 'styled-components';
 // import middleware
-import { updateLikeFB, loadLikePostFB, deleteLikeFB } from '../redux/modules/likes';
+import { updateLikeFB, deleteLikeFB, loadLikePostFB } from '../redux/modules/likes';
 
 
-function Heart({IsLogin, nowLikePost}) {
+function Heart({IsLogin, nowLikeList}) {
+
+    const [nowIndex, setNowIndex] = useState(undefined);
+    // const [like_list, set_like_list] = useState(undefined);
+    // const [nowLikeId, setNowLikeId] = useState(undefined);
+    // const [nowLikePostId, setNowLikePostId] = useState(undefined);
+
+    console.log(nowLikeList)
 
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(loadLikePostFB())
-    },[dispatch])
     
     const now_nickname = window.localStorage.getItem('nickname');
-    const nowList = useSelector(state => state.likes.list);
-    const nowIndex = nowList.indexOf(nowLikePost[0]);
-    const like_list = nowList[nowIndex].like_user
-    const nowLikeId = nowList[nowIndex].id
-    const nowLikePostId = nowList[nowIndex].like_post
+
+    const nowList = useSelector(state => state.likes.list)
+
+    useEffect(() => {
+        const nowIndex = nowList.indexOf(nowLikeList);
+        if(nowIndex){
+            return setNowIndex(nowIndex)
+        }
+    },[nowList, nowIndex, nowLikeList])
 
     const onLike = () => {
-        if (IsLogin === true && like_list.indexOf(now_nickname) === -1){
-           dispatch(updateLikeFB(nowLikePost, now_nickname, nowIndex, now_nickname))
-            alert('좋아요!')
-            dispatch(loadLikePostFB()); 
-        } else if (IsLogin === true && like_list.indexOf(now_nickname) !== -1){
+        if (IsLogin === true && nowLikeList?.like_user.indexOf(now_nickname) === -1){
+           dispatch(updateLikeFB(nowLikeList, now_nickname, nowIndex))
+            alert('좋아요!');
+            dispatch(loadLikePostFB())
+        } else if (IsLogin === true && nowLikeList?.like_list?.indexOf(now_nickname) !== -1){
             alert('좋아요 취소');
-            dispatch(deleteLikeFB(nowLikeId, nowLikePostId, like_list, now_nickname))
+            dispatch(deleteLikeFB(nowLikeList?.id, nowLikeList?.like_post, nowLikeList?.like_user, now_nickname))
+            dispatch(loadLikePostFB())
         }
         else {
             alert('로그인이 필요합니다!')
@@ -37,10 +45,10 @@ function Heart({IsLogin, nowLikePost}) {
 
   return (
     <>
-        {like_list.indexOf(now_nickname) === -1 ? 
+        {nowLikeList?.like_user.indexOf(now_nickname) === -1 ? 
             <LikeHeart onClick={onLike}>🤍</LikeHeart> 
             : <LikeHeart onClick={onLike}>❤️</LikeHeart>}
-        <Span>{like_list[0]}님 외 <strong>{like_list.length}</strong>명이 좋아합니다!</Span>
+        <Span><strong>{nowLikeList?.like_user.length}</strong>명이 좋아합니다!</Span>
     </>
   )
 }

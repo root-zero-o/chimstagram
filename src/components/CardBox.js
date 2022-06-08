@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import { useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux';
 
 import styled from 'styled-components';
 import Modal from './Modal';
 
  function CardBox({ id, nickname, text, img_url, index}) {
- const [nowLikeNum, setNowLikeNum] = useState(undefined);
+
+    const [nowLikeList, setNowLikeList] = useState(undefined);
+    const [nowLikeNum, setNowLikeNum] = useState(undefined);            // 변하는 값은 state에 널어서 관리하기
 
     // 모달창 열고 닫기
     const [modalOpen, setModalOpen] = useState(false);
@@ -18,19 +20,25 @@ import Modal from './Modal';
     }
 
     const likeList = useSelector(state => state.likes.list)
-    useEffect(() => {
-        const nowLikeList = likeList.find(value => value.like_post === id)
+    useEffect(() => {                                                      // useEffect로 state값이 변경될 때 마다 실행되게 해주어야 함!
+        const nowLikeList = likeList.find(value => value.like_post === id) // 애초에 데이터를 여기서 가공하지 않는게 좋다!;ㅅ; 컴포넌트에서는 가공된 데이터를 받아 표시만 해줄 것
         if(nowLikeList){
-            return setNowLikeNum(nowLikeList.like_user)
+            setNowLikeList(nowLikeList)
+            setNowLikeNum(nowLikeList.like_user)                    // if문을 사용해서 데이터가 있을때만 setState가 실행되게 하자 !!
         }
-    },[id, likeList, nowLikeNum])
-    console.log(nowLikeNum)
-
-    
-  
+    },[id, likeList, nowLikeNum])                                          // 사용되는 값들이 변할때만 실행되게 하자 !! (변수 이름이 어렵다 ..;ㅅ;)
+                                                                            // state값은 !! 항상 !! 초기값을 먼저 표시한 뒤 값을 받기 때문에, 데이터가 있을때만 실행해서 오류를 없애자!                                                                          
   return (
     <>
-        <Modal open={modalOpen} close={closeModal} id={id} nickname={nickname} text={text} img_url={img_url} index={index} />
+        <Modal 
+            open={modalOpen} 
+            close={closeModal} 
+            id={id} 
+            nickname={nickname} 
+            text={text} 
+            img_url={img_url} 
+            index={index}
+            nowLikeList={nowLikeList}/>
         <CardDiv onClick={openModal}>
                 <ProfileContainer>
                     <ProfileName>{nickname}</ProfileName>
@@ -38,13 +46,13 @@ import Modal from './Modal';
                 <ImgBox src={img_url}></ImgBox>
                 <TextBox>{text}</TextBox>
                 <IconBox>
-                    <span>좋아요 {nowLikeNum?.length}개 / 댓글 0개</span>
+                    <span>좋아요 {nowLikeNum?.length}개 / 댓글 0개</span>   {/* 옵셔널 체이닝으로 한 번 더 값이 있는지 검사하기  */}  
                 </IconBox>
         </CardDiv>
     </>
     
   )
-}
+} 
 
 const CardDiv = styled.div`
     width: 350px;
