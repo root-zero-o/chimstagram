@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
-import { useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react'
+import { useSelector} from 'react-redux';
 
 import styled from 'styled-components';
 import Modal from './Modal';
 
  function CardBox({ id, nickname, text, img_url, index}) {
+ const [nowLikeNum, setNowLikeNum] = useState(undefined);
 
     // 모달창 열고 닫기
     const [modalOpen, setModalOpen] = useState(false);
@@ -17,8 +18,15 @@ import Modal from './Modal';
     }
 
     const likeList = useSelector(state => state.likes.list)
-    const nowLikeList = likeList.filter(value => value.like_post === id)
-    const nowLikeNum = nowLikeList[0].like_user
+    useEffect(() => {
+        const nowLikeList = likeList.find(value => value.like_post === id)
+        if(nowLikeList){
+            return setNowLikeNum(nowLikeList.like_user)
+        }
+    },[id, likeList, nowLikeNum])
+    console.log(nowLikeNum)
+
+    
   
   return (
     <>
@@ -30,7 +38,7 @@ import Modal from './Modal';
                 <ImgBox src={img_url}></ImgBox>
                 <TextBox>{text}</TextBox>
                 <IconBox>
-                    <span>좋아요 {nowLikeNum.length}개 / 댓글 0개</span>
+                    <span>좋아요 {nowLikeNum?.length}개 / 댓글 0개</span>
                 </IconBox>
         </CardDiv>
     </>
@@ -40,16 +48,12 @@ import Modal from './Modal';
 
 const CardDiv = styled.div`
     width: 350px;
-
     box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
     border-radius: 20px;
-
     margin: 10px 30px;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     &:hover{
         box-shadow: 0px 0px 15px rgba(0,0,0,0.4);
         cursor: pointer;
@@ -62,27 +66,21 @@ const ProfileContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-
     width: 300px;
     padding: 20px;
-
     z-index: 3;
-
 `;
 
 const ImgBox = styled.img`
     width: 350px;
     height: 300px;
-
     margin-bottom: 10px;
-
     z-index: 3;
 `;
 
 const TextBox = styled.span`
     margin-left: 20px;
     margin-bottom: 10px;
-
     font-size: 20px;
     font-family: text;
     z-index: 3;
@@ -91,20 +89,16 @@ const IconBox = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-
     width: 190px;
     margin-bottom: 10px;
     z-index: 3;
-
     font-family: text;
     font-size: 15px;
 `;
 
 const ProfileName = styled.span`
     font-size: 25px;
-
     margin-left: 20px;
-
     font-family: text;
     font-weight: bold;
 `;

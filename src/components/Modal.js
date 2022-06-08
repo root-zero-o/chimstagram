@@ -84,14 +84,11 @@ const ModalBackground = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     background-color: rgba(0,0,0,0.4);
     z-index: 10;
     &:hover{
@@ -101,18 +98,14 @@ const ModalBackground = styled.div`
 
 const ModalBox = styled.div`
     background-color: white;
-
     width: 700px;
     height: 50vh;
     min-height: 450px;
-
     border-radius: 20px;
-
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     z-index: 20;
-
     position: fixed;
     top: 20%;
 `;
@@ -120,24 +113,19 @@ const ModalBox = styled.div`
 const TextBox = styled.div`
     width: ${(props) => props.width};
     height: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
-
 `;
 
 const TextDiv = styled.div`
     width: 100%;
     height: ${(props) => props.height};
-
     font-family: text;
     font-size:20px;
     font-weight: ${(props) => props.fontWeight};
     text-align: center;
-
     margin: 20px 0px;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -146,7 +134,6 @@ const TextDiv = styled.div`
 const Img = styled.img`
     width: 100%;
     height: 100%;
-
     border: none;
     border-radius: 10px;
 `;
@@ -154,39 +141,30 @@ const Img = styled.img`
 const CommentContainer = styled.div`
     width: 100%;
     height: 90%;
-
     display: flex;
     flex-direction: column;
 `;
 
 const InputForm = styled.form`
     width: 90%;
-
     display: flex;
     align-items: center;
-
 `;
 
 const Input = styled.input`
     width: 200px;
     height: 30px;
-
     padding: 5px;
-
     font-family: text;
-
     margin-left: 20px;
 `;
 
 const Button = styled.button`
     width: 60px;
     height: 100%;
-
     background-color: black;
     color: white;
-
     font-family: text;
-
     &:hover{
         background-color: rgba(0,0,0,0.4);
         color: black;
@@ -198,7 +176,6 @@ const Button = styled.button`
 const CommentBox = styled.div`
     width: 100%;
     height: 80%;
-
     overflow-y: auto;
 `;
 
@@ -213,10 +190,8 @@ const Span = styled.span`
 const Comment = styled.div`
     display: flex;
     flex-direction: column;
-
     height: 50px;
     width: 90%;
-
     padding: 10px;
 `;
 
@@ -235,7 +210,6 @@ const DeleteBtn = styled.button`
     border: none;
     border-radius: 10px;
     margin: 0px 5px;
-
     &:hover{
         background-color: rgba(0,0,0,0.3);
         cursor: pointer;

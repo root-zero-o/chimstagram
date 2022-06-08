@@ -17,9 +17,9 @@ function Home() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(loadLikePostFB())
-        dispatch(loadAllUserFB());
+        dispatch(loadLikePostFB());
         dispatch(loadTextFB());
+        dispatch(loadAllUserFB());
     },[dispatch]);
 
     return (

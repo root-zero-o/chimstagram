@@ -53,7 +53,6 @@ function Input() {
       alert("저장 완료!");
     }
 
-
   return (
     <>
       <Header/>
@@ -69,7 +68,7 @@ function Input() {
               onChange={saveFileImage}
               required/>
             <h3>글쓰기</h3>
-            <TextArea placeholder='여기에 글을 입력하세요!' ref={textInput} required/>
+            <TextArea type="text" placeholder='여기에 글을 입력하세요!' ref={textInput} required/>
             <div>
               <Button type="submit" onClick={onClickBtn}>완료!</Button>
               <Link to={'/'}><Button>취소</Button></Link>
@@ -150,7 +149,7 @@ export const ImgInput = styled.input`
   display: none;
 `;
 
-export const TextArea = styled.textarea`
+export const TextArea = styled.input`
   width: 80%;
   height: 50%;
 
