@@ -16,20 +16,22 @@ import Modal from './Modal';
         setModalOpen(false);
     }
 
-    const likeList = useSelector(state => state.likes.list[index].like_user)
+    const likeList = useSelector(state => state.likes.list)
+    const nowLikeList = likeList.filter(value => value.like_post === id)
+    const nowLikeNum = nowLikeList[0].like_user
   
   return (
     <>
         <Modal open={modalOpen} close={closeModal} id={id} nickname={nickname} text={text} img_url={img_url} index={index} />
         <CardDiv onClick={openModal}>
-                    <ProfileContainer>
-                        <ProfileName>{nickname}</ProfileName>
-                    </ProfileContainer>
-                    <ImgBox src={img_url}></ImgBox>
-                    <TextBox>{text}</TextBox>
-                    <IconBox>
-                        <span>좋아요 {likeList.length}개 / 댓글 0개</span>
-                    </IconBox>
+                <ProfileContainer>
+                    <ProfileName>{nickname}</ProfileName>
+                </ProfileContainer>
+                <ImgBox src={img_url}></ImgBox>
+                <TextBox>{text}</TextBox>
+                <IconBox>
+                    <span>좋아요 {nowLikeNum.length}개 / 댓글 0개</span>
+                </IconBox>
         </CardDiv>
     </>
     
@@ -40,7 +42,7 @@ const CardDiv = styled.div`
     width: 350px;
 
     box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
-    border-radius: 20px;;
+    border-radius: 20px;
 
     margin: 10px 30px;
 
