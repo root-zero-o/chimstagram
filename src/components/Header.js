@@ -1,6 +1,8 @@
-import styled from 'styled-components';
+// import React, React-redux
 import React  from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+// import style
+import styled from 'styled-components';
 import '../App.css';
 // import FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,11 +18,15 @@ import { loadUserFB } from '../redux/modules/user';
  function Header() {
 
     const dispatch = useDispatch();
+
     let IsLogin = useSelector(state => state.user.is_login)
     const Nickname = useSelector(state => state.user.nickname)
     let localStorage = window.localStorage;
     const LocalEmail = localStorage.getItem('email')
+    // user 정보 가져오기
     dispatch(loadUserFB(LocalEmail))
+    
+    // 로그인 여부 확인
     if(LocalEmail){
         IsLogin = true
     } else {

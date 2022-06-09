@@ -38,7 +38,7 @@ import Modal from './Modal';
             text={text} 
             img_url={img_url} 
             index={index}
-            nowLikeList={nowLikeList}/>
+            nowLikeList={nowLikeList}/> 
         <CardDiv onClick={openModal}>
                 <ProfileContainer>
                     <ProfileName>{nickname}</ProfileName>
@@ -52,6 +52,8 @@ import Modal from './Modal';
     
   )
 } 
+
+/* styled-components*/
 
 const CardDiv = styled.div`
     width: 350px;
