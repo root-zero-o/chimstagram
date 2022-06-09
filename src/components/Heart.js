@@ -13,8 +13,6 @@ function Heart({IsLogin, nowLikeList}) {
     // const [nowLikeId, setNowLikeId] = useState(undefined);
     // const [nowLikePostId, setNowLikePostId] = useState(undefined);
 
-    console.log(nowLikeList)
-
     const dispatch = useDispatch();
     
     const now_nickname = window.localStorage.getItem('nickname');
@@ -33,9 +31,9 @@ function Heart({IsLogin, nowLikeList}) {
            dispatch(updateLikeFB(nowLikeList, now_nickname, nowIndex))
             alert('좋아요!');
             dispatch(loadLikePostFB())
-        } else if (IsLogin === true && nowLikeList?.like_list?.indexOf(now_nickname) !== -1){
+        } else if (IsLogin === true && nowLikeList?.like_user.indexOf(now_nickname) !== -1){
             alert('좋아요 취소');
-            dispatch(deleteLikeFB(nowLikeList?.id, nowLikeList?.like_post, nowLikeList?.like_user, now_nickname))
+            dispatch(deleteLikeFB({id: nowLikeList?.id, like_post: nowLikeList?.like_post, like_user: nowLikeList?.like_user}, now_nickname))
             dispatch(loadLikePostFB())
         }
         else {

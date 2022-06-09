@@ -28,7 +28,7 @@ function Modal({ open, close, id, nickname, text, img_url, index, nowLikeList}) 
     const onDelete = () => {
         dispatch(deleteFB(id));
         dispatch(deleteFileFB(img_url))
-        dispatch(deleteLikePostFB(nowLikeList, id))
+        dispatch(deleteLikePostFB(nowLikeList, now_nickname))
         alert('삭제민수야 고맙다🙏');
     }
 
@@ -47,20 +47,6 @@ function Modal({ open, close, id, nickname, text, img_url, index, nowLikeList}) 
                     <TextDiv height="10%">
                         <Heart IsLogin={IsLogin} nowLikeList={nowLikeList}/>
                     </TextDiv>
-                    <CommentContainer>
-                        {IsLogin ? (
-                            <InputForm>
-                                <Input type="text" placeholder='댓글 달기' required/>
-                                <Button type="button">저장</Button>
-                            </InputForm>
-                        ) : null}
-                        <CommentBox>
-                            <Comment>
-                                <Span fontWeight="bold">주펄</Span>
-                                <Span>M-I-C-K-E-Y-M-O-U-S-E</Span>
-                            </Comment>
-                        </CommentBox>
-                    </CommentContainer>
                 </TextBox>
                 { now_nickname === nickname ? (<BtnDiv>
                                                     <DeleteBtn type="button" onClick={onDelete}>삭제하기</DeleteBtn>

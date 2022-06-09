@@ -35,10 +35,9 @@ export const addLikePostFB = (payload) => {
     } 
 }
 
-export const deleteLikePostFB = ([post]) => {
+export const deleteLikePostFB = (payload) => {
     return async function(dispatch){
-        const id = post.id
-        console.log(id)
+        const id = payload.id
         const docRef = doc(db, "likes", id);
         await deleteDoc(docRef);
         dispatch(deletePost(id))
@@ -68,12 +67,12 @@ export const updateLikeFB = (payload, nickname, index) => {
     }
 }
 
-export const deleteLikeFB = (id, postId, list, nickname) => {
+export const deleteLikeFB = (payload, nickname) => {
     return async function(dispatch){
-        const docRef = doc(db, "likes", id);
+        const docRef = doc(db, "likes", payload.id);
         await updateDoc(docRef, {
-            like_post : postId,
-            like_user : list.filter(value => value !== nickname)
+            like_post : payload.like_post,
+            like_user : payload.like_user.filter(value => value !== nickname)
         })
         dispatch(loadLikePostFB());
         dispatch(deleteLike());

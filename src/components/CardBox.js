@@ -45,9 +45,8 @@ import Modal from './Modal';
                 </ProfileContainer>
                 <ImgBox src={img_url}></ImgBox>
                 <TextBox>{text}</TextBox>
-                <IconBox>
-                    <span>좋아요 {nowLikeNum?.length}개 / 댓글 0개</span>   {/* 옵셔널 체이닝으로 한 번 더 값이 있는지 검사하기  */}  
-                </IconBox>
+                <Span>❣️ 좋아요 {nowLikeNum?.length}개 </Span>   {/* 옵셔널 체이닝으로 한 번 더 값이 있는지 검사하기  */}  
+
         </CardDiv>
     </>
     
@@ -93,22 +92,18 @@ const TextBox = styled.span`
     font-family: text;
     z-index: 3;
 `;
-const IconBox = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 190px;
-    margin-bottom: 10px;
-    z-index: 3;
-    font-family: text;
-    font-size: 15px;
-`;
 
 const ProfileName = styled.span`
     font-size: 25px;
     margin-left: 20px;
     font-family: text;
     font-weight: bold;
+`;
+
+const Span = styled.span`
+    font-family: text;
+    font-size: 15px;
+    margin: 20px;
 `;
 
 export default CardBox;
