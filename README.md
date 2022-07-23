@@ -1,6 +1,6 @@
 # 침스타그램💟
 
-항해99 React 심화주차 과제 : 침스타그램(Chimstagram, 침착맨 + 인스타그램) <br>
+침스타그램(Chimstagram, 침착맨 + 인스타그램) <br>
 
 ### 1. 목적💁‍♀️
 Redux, Redux middleware(Redux-thunk), Firebase를 공부하기 위해, 스트리머 '침착맨'을 좋아하는 마음을 담아 만들었습니다!
